@@ -1,0 +1,1 @@
+(netsh wlan show profiles | Select-String "All User Profile" | ForEach-Object { ($_ -split ":")[1].Trim() }) | ForEach-Object { "Profile: $_`nPassword: $(netsh wlan show profile name='$_' key=clear | Select-String 'Key Content' | ForEach-Object { ($_ -split ': ')[1].Trim() })" } | Out-File "$env:USERPROFILE\Desktop\WiFiPasswords.txt"
